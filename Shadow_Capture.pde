@@ -24,16 +24,23 @@ void setup()
   base = new PImage(video.width, video.height);
 
   noCursor();
+  textAlign(CENTER);
 }
 
 void draw()
-{
+{    
   if (video.available())
   {
     video.read();
   }
 
   image(img, 0, 0);
+  
+  if(mode == 0 && !set)
+  {
+    fill(0);
+    text("Click once to set the base image. Every subsequent click will record deviations from this base image.", width/2, height/2);
+  }
 }
 
 void mousePressed()
@@ -67,6 +74,7 @@ void mousePressed()
         }
       }
     }
+    break;
 
   case 1:
     for (int x = 0; x < video.width; x++)
@@ -75,7 +83,7 @@ void mousePressed()
       {  
         int loc = x + y*img.width;
 
-        if (brightness(video.pixels[loc]) < 25)
+        if (brightness(video.pixels[loc]) < 10)
         {
           img.pixels[loc] = color(0);
         }
